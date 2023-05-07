@@ -40,7 +40,17 @@ const handler = NextAuth({
     },
 
     async session(params: { session: Session }) {
-      return params.session;
+      const userSession = await User.findOne({
+        email: params.session.user?.email,
+      });
+
+      return {
+        ...params.session,
+        user: {
+          ...params.session.user,
+          id: userSession?._id.toString(),
+        },
+      };
     },
   },
 });

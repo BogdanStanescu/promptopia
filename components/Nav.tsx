@@ -46,6 +46,7 @@ const Logo = () => {
 const DesktopNavigation = () => {
   const { data } = useSession();
   const providers = useInitializeProviders();
+  const [toggleDropdown, setToggleDropdown] = useState(false);
 
   return (
     <div className="sm:flex hidden">
@@ -55,7 +56,14 @@ const DesktopNavigation = () => {
             Create Post
           </Link>
 
-          <button type="button" className="outline_btn">
+          <button
+            type="button"
+            className="outline_btn"
+            onClick={() => {
+              setToggleDropdown(false);
+              signOut();
+            }}
+          >
             Sign Out
           </button>
 
@@ -66,6 +74,7 @@ const DesktopNavigation = () => {
               alt="Profile"
               height={37}
               width={37}
+              onClick={() => setToggleDropdown(!toggleDropdown)}
             />
           </Link>
         </div>
