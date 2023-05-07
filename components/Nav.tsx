@@ -37,6 +37,72 @@ const Logo = () => {
   );
 };
 
+const MobileNavigation = () => {
+  const providers = useInitializeProviders();
+  const { isLoggedIn } = useContext(NavContext);
+  const [toggleDropdown, setToggleDropdown] = useState(false);
+
+  return (
+    <div className="sm:hidden flex relative">
+      {isLoggedIn ? (
+        <div className="flex">
+          <Image
+            className="rounded-full cursor-pointer"
+            src="/assets/images/logo.svg"
+            alt="Profile"
+            height={37}
+            width={37}
+            onClick={() => setToggleDropdown(!toggleDropdown)}
+          />
+
+          {toggleDropdown && (
+            <div className="dropdown">
+              <Link
+                href="/profile"
+                className="dropdown_link"
+                onClick={() => setToggleDropdown(false)}
+              >
+                My Profile
+              </Link>
+
+              <Link
+                href="/create-prompt"
+                className="dropdown_link"
+                onClick={() => setToggleDropdown(false)}
+              >
+                Create Prompt
+              </Link>
+
+              <button
+                type="button"
+                className="mt-5 w-full"
+                onClick={() => {
+                  setToggleDropdown(false);
+                  signOut();
+                }}
+              >
+                Sign Out
+              </button>
+            </div>
+          )}
+        </div>
+      ) : (
+        providers &&
+        providers.map((provider) => (
+          <button
+            key={provider.name}
+            type="button"
+            className="black_btn"
+            onClick={() => signIn(provider.id)}
+          >
+            Sign In
+          </button>
+        ))
+      )}
+    </div>
+  );
+};
+
 const useInitializeProviders = () => {
   const [providers, setProviders] = useState<ClientSafeProvider[]>();
 
