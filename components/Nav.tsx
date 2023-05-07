@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
 import { useState, useEffect, createContext, useContext } from "react";
@@ -16,6 +18,16 @@ const Container = ({ children }: { children: React.ReactNode }) => {
     <NavContext.Provider value={{ isLoggedIn, setIsLoggedIn }}>
       <div className="flex-between w-full mb-16 pt-3">{children}</div>
     </NavContext.Provider>
+  );
+};
+
+const Nav = () => {
+  return (
+    <Container>
+      <Logo />
+      <DesktopNavigation />
+      <MobileNavigation />
+    </Container>
   );
 };
 
@@ -172,3 +184,5 @@ type State = {
 };
 
 const NavContext = createContext({} as State);
+
+export default Nav;
