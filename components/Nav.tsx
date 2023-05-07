@@ -17,6 +17,24 @@ const Container = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
+const Logo = () => {
+  return (
+    <Link href="/" className="flex gap-2 flex-center">
+      <Image
+        className="object-contain"
+        src="/assets/images/logo.svg"
+        alt="Promptopia Logo"
+        height={30}
+        width={30}
+      />
+
+      <p className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-yellow-500">
+        Promptopia
+      </p>
+    </Link>
+  );
+};
+
 const useInitializeProviders = () => {
   const [providers, setProviders] = useState<ClientSafeProvider[]>();
 
