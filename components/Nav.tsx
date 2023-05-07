@@ -62,7 +62,7 @@ const DesktopNavigation = () => {
           <Link href="/profile">
             <Image
               className="rounded-full"
-              src="/assets/images/logo.svg"
+              src={data?.user.image || "/assets/images/profile.svg"}
               alt="Profile"
               height={37}
               width={37}
@@ -98,7 +98,7 @@ const MobileNavigation = () => {
         <div className="flex">
           <Image
             className="rounded-full cursor-pointer"
-            src="/assets/images/logo.svg"
+            src={data?.user.image || "/assets/images/profile.svg"}
             alt="Profile"
             height={37}
             width={37}
