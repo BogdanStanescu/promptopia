@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useState, useEffect, createContext, useContext } from "react";
+import { useState, useEffect } from "react";
 import {
   signIn,
   signOut,
@@ -12,13 +12,7 @@ import {
 } from "next-auth/react";
 
 const Container = ({ children }: { children: React.ReactNode }) => {
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
-
-  return (
-    <NavContext.Provider value={{ isLoggedIn, setIsLoggedIn }}>
-      <div className="flex-between w-full mb-16 pt-3">{children}</div>
-    </NavContext.Provider>
-  );
+  return <div className="flex-between w-full mb-16 pt-3">{children}</div>;
 };
 
 const Nav = () => {
@@ -50,12 +44,12 @@ const Logo = () => {
 };
 
 const DesktopNavigation = () => {
+  const { data } = useSession();
   const providers = useInitializeProviders();
-  const { isLoggedIn } = useContext(NavContext);
 
   return (
     <div className="sm:flex hidden">
-      {isLoggedIn ? (
+      {data?.user ? (
         <div className="flex gap-3 md:gap-5">
           <Link className="black_btn" href="/create-prompt">
             Create Post
@@ -77,17 +71,16 @@ const DesktopNavigation = () => {
         </div>
       ) : (
         <>
-          {providers &&
-            providers.map((provider) => (
-              <button
-                key={provider.name}
-                type="button"
-                className="black_btn"
-                onClick={() => signIn(provider.id)}
-              >
-                Sign In
-              </button>
-            ))}
+          {providers?.map((provider) => (
+            <button
+              key={provider.name}
+              type="button"
+              className="black_btn"
+              onClick={() => signIn(provider.id)}
+            >
+              Sign In
+            </button>
+          ))}
         </>
       )}
     </div>
@@ -95,13 +88,13 @@ const DesktopNavigation = () => {
 };
 
 const MobileNavigation = () => {
+  const { data } = useSession();
   const providers = useInitializeProviders();
-  const { isLoggedIn } = useContext(NavContext);
   const [toggleDropdown, setToggleDropdown] = useState(false);
 
   return (
     <div className="sm:hidden flex relative">
-      {isLoggedIn ? (
+      {data?.user ? (
         <div className="flex">
           <Image
             className="rounded-full cursor-pointer"
@@ -132,7 +125,7 @@ const MobileNavigation = () => {
 
               <button
                 type="button"
-                className="mt-5 w-full"
+                className="mt-5 w-full black_btn"
                 onClick={() => {
                   setToggleDropdown(false);
                   signOut();
@@ -144,8 +137,7 @@ const MobileNavigation = () => {
           )}
         </div>
       ) : (
-        providers &&
-        providers.map((provider) => (
+        providers?.map((provider) => (
           <button
             key={provider.name}
             type="button"
@@ -177,12 +169,5 @@ const useInitializeProviders = () => {
 
   return providers;
 };
-
-type State = {
-  isLoggedIn: boolean;
-  setIsLoggedIn: (isLoggedIn: boolean) => void;
-};
-
-const NavContext = createContext({} as State);
 
 export default Nav;
