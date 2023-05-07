@@ -37,6 +37,51 @@ const Logo = () => {
   );
 };
 
+const DesktopNavigation = () => {
+  const providers = useInitializeProviders();
+  const { isLoggedIn } = useContext(NavContext);
+
+  return (
+    <div className="sm:flex hidden">
+      {isLoggedIn ? (
+        <div className="flex gap-3 md:gap-5">
+          <Link className="black_btn" href="/create-prompt">
+            Create Post
+          </Link>
+
+          <button type="button" className="outline_btn">
+            Sign Out
+          </button>
+
+          <Link href="/profile">
+            <Image
+              className="rounded-full"
+              src="/assets/images/logo.svg"
+              alt="Profile"
+              height={37}
+              width={37}
+            />
+          </Link>
+        </div>
+      ) : (
+        <>
+          {providers &&
+            providers.map((provider) => (
+              <button
+                key={provider.name}
+                type="button"
+                className="black_btn"
+                onClick={() => signIn(provider.id)}
+              >
+                Sign In
+              </button>
+            ))}
+        </>
+      )}
+    </div>
+  );
+};
+
 const MobileNavigation = () => {
   const providers = useInitializeProviders();
   const { isLoggedIn } = useContext(NavContext);
