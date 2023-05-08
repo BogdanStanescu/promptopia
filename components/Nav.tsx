@@ -53,7 +53,7 @@ const DesktopNavigation = () => {
       {data?.user ? (
         <div className="flex gap-3 md:gap-5">
           <Link className="black_btn" href="/create-prompt">
-            Create Post
+            Create Prompt
           </Link>
 
           <button

@@ -28,7 +28,7 @@ const Form = ({ type, isLoading, onSubmit }: FormProps) => {
   return (
     <section className="w-full max-w-full flex flex-start flex-col">
       <h1 className="head_text text-left">
-        <span className="blue_gradient">{type} Post</span>
+        <span className="blue_gradient">{type} Prompt</span>
       </h1>
 
       <p className="desc text-left max-w-md">
