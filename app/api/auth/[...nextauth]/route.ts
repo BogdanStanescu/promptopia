@@ -5,8 +5,9 @@ import User from "@models/user";
 
 type Profile = {
   email?: string;
-  username?: string;
-  image?: string;
+  given_name?: string;
+  family_name?: string;
+  picture?: string;
 };
 
 const handler = NextAuth({
@@ -21,15 +22,17 @@ const handler = NextAuth({
     async signIn(params: { profile?: Profile }) {
       try {
         await connectToDB();
-        const { email } = params.profile || {};
+        const { email, given_name, family_name, picture } =
+          params.profile || {};
         const user = await User.findOne({
           email,
         });
 
         if (!user) {
           await User.create({
-            ...params.profile,
-            username: email?.split("@")[0],
+            email,
+            image: picture,
+            username: `${given_name} ${family_name}`,
           });
         }
         return true;
