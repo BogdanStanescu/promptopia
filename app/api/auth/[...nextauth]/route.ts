@@ -2,13 +2,7 @@ import NextAuth, { Session } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import { connectToDB } from "@utils/database";
 import User from "@models/user";
-
-type Profile = {
-  email?: string;
-  given_name?: string;
-  family_name?: string;
-  picture?: string;
-};
+import { OAuthProfile } from "@app/api/apiTypes";
 
 const handler = NextAuth({
   providers: [
@@ -19,7 +13,7 @@ const handler = NextAuth({
   ],
 
   callbacks: {
-    async signIn(params: { profile?: Profile }) {
+    async signIn(params: { profile?: OAuthProfile }) {
       try {
         await connectToDB();
         const { email, given_name, family_name, picture } =
