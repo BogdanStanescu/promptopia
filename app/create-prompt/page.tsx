@@ -20,10 +20,10 @@ const CreatePrompt = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const createPrompt = async ({
-    prompt,
+    title,
     tag,
   }: {
-    prompt: string;
+    title: string;
     tag: string;
   }) => {
     setIsLoading(true);
@@ -33,7 +33,7 @@ const CreatePrompt = () => {
         method: "POST",
         body: JSON.stringify({
           tag,
-          prompt,
+          title,
           userId: data.user.id,
         }),
       });
